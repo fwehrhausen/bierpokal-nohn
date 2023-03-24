@@ -25,6 +25,7 @@
         "chart.js": "^4.2.1",
         "chartjs-plugin-datalabels": "^2.2.0",
         "material-dynamic-colors": "^0.1.7",
+        "swiper": "^9.1.1",
         "vue-chartjs": "^5.2.0"
     }
 }

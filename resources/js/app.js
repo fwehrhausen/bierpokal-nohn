@@ -22,6 +22,7 @@ import Ranking from './components/Ranking.vue';
 //app.component('chat-form', require('./components/ChatForm.vue').default);
 app.component('ranking',Ranking);
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

@@ -3,31 +3,61 @@
         <div class="row">
             <div class="col-12 text-center">
                 <div class="header">
-                <h1><i class="fa-solid fa-trophy"></i> Biermeter-Pokal Nohn 2023 </h1>
+                    <h1><i class="fa-solid fa-trophy"></i> Biermeter-Pokal Nohn 2023 </h1>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <Bar
-                    id="ranking"
-                    :options="chartOptions"
-                    :data="chartData"
-                    v-if="loaded"
-                />
-            </div>
+        <swiper
+            :spaceBetween="30"
+            :centeredSlides="true"
+            :autoplay="{
+              delay: 9000,
+              disableOnInteraction: false,
+            }"
 
-        </div>
+            :modules="modules"
+            class="mySwiper"
+        >
+            <swiper-slide>
+                <div class="row">
+                    <div class="col-12">
+                        <Bar
+                            id="ranking"
+                            :options="chartOptions"
+                            :data="chartData"
+                            v-if="loaded"
+                        />
+                    </div>
+
+                </div>
+            </swiper-slide>
+            <swiper-slide>Slide 2</swiper-slide>
+            <swiper-slide>Slide 3</swiper-slide>
+
+        </swiper>
+
+
+
     </div>
 </template>
 
 <script>
 
 import {Bar} from 'vue-chartjs'
+import {Swiper, SwiperSlide} from 'swiper/vue';
+import {Autoplay, Pagination, Navigation} from 'swiper';
 import {Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale} from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,ChartDataLabels)
+// Import Swiper styles
+import 'swiper/css';
+
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+//import './style.css';
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels)
 ChartJS.defaults.font.size = 24;
 ChartJS.defaults.font.weight = "bold";
 ChartJS.defaults.color = "white";
@@ -35,9 +65,14 @@ ChartJS.defaults.borderColor = "#00000000";
 
 export default {
     name: "Ranking",
-    components: {Bar},
+    components: {
+        Bar,
+        Swiper,
+        SwiperSlide,
+    },
     data() {
         return {
+            modules: [Autoplay, Pagination, Navigation],
             data: null,
             clubs: [],
             loaded: false,
@@ -58,19 +93,23 @@ export default {
                 legend: {
                     display: false,
                 },
-                plugins:{
-                    legend:{
-                        display:false,
-                        labels:{
-                            font:{
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels: {
+                            font: {
                                 size: 18,
                                 weight: "bold",
                             }
                         }
                     },
-                    datalabels:{
+                    datalabels: {
                         anchor: "end",
-                        align:"end",
+                        align: "end",
+                        padding: {
+                            left: 0,
+                            right: 20
+                        }
                     }
                 },
                 //maintainAspectRatio: false,
@@ -104,21 +143,22 @@ export default {
 
 <style scoped>
 
-#ranking{
+#ranking {
     font-size: 20px;
 }
 
-.container{
+.container {
     max-width: 1600px;
 
 }
-.header{
+
+.header {
     align-content: center;
     align-items: center;
     text-align: center;
 }
 
-body{
+body {
     background-color: #61596e !important;
     color: white !important;
 }
