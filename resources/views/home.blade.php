@@ -22,13 +22,28 @@
     {{--    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.0.8/dist/cdn/beer.min.js"></script>--}}
     {{--    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@0.1.5/dist/cdn/material-dynamic-colors.min.js"></script>--}}
 </head>
-<body class="main-bg-color secondary-color">
+<body class="secondary-color" style="background-color: #d0cfcd">
     <div id="app">
-        <main class="py-4">
+        <main class=" p-3 p-sm-3 p-md-5">
             <ranking></ranking>
         </main>
     </div>
 </body>
+<style>
+    html {
+        height: 100%;
+        width: 100%
+    }
+    body {
+        background-color: #d0cfcd !important;
+        background-image: url(images/bg_nohn.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        background-attachment: fixed;
+        color: #000 !important;
+    }
+</style>
 </html>
 
 
