@@ -31,8 +31,7 @@
 
                 </div>
             </swiper-slide>
-            <swiper-slide>Slide 2</swiper-slide>
-            <swiper-slide>Slide 3</swiper-slide>
+
 
         </swiper>
 
@@ -57,11 +56,63 @@ import 'swiper/css/navigation';
 
 //import './style.css';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels)
+const image = new Image();
+image.src = "/images/beer_vertical.jpg";
+
+// function getData(){
+//     var result = axios.get('/api/ranking').then(response => {
+//         return result = response.data;
+//     }).catch(({response: {data}}) => {
+//         //alert(data.message);
+//
+//     });
+//
+//     return result;
+// }
+
+
+const beerImage = {
+    id:"beerImage",
+    beforeDraw(chart, args, options) {
+        const {ctx,chartArea:{top,bottom,left,right,width,height},
+            scales:{x,y}} = chart;
+
+        ctx.save();
+
+        // console.log("y3: " +y.getPixelForValue(3));
+        // console.log("x3: " +x.getPixelForValue(3));
+        // console.log("y2: " +y.getPixelForValue(2));
+        // console.log("x2: " +x.getPixelForValue(2));
+        // console.log("y1: " +y.getPixelForValue(1));
+        // console.log("x1: " +x.getPixelForValue(1));
+        // console.log("y0: " +y.getPixelForValue(0));
+        // console.log("x0: " +x.getPixelForValue(0));
+        // console.log(y);
+
+        let imageHeight = 30;
+
+        let data = chart.data.datasets[0].data;
+        let total = data.length;
+        let xFactor = x.maxWidth / x.max;
+        let yFactor = y.maxHeight/total -y.paddingTop;
+
+        console.log(y);
+        for (let i = 0;i<total;i++) {
+            console.log();
+            ctx.drawImage(image, x.getPixelForValue(0), y.getPixelForValue(i)-(yFactor/2), (xFactor*(data[i])), yFactor)
+        }
+        // ctx.drawImage(image,x.getPixelForValue(0),y.getPixelForValue(2),600,imageHeight)
+        // ctx.drawImage(image,x.getPixelForValue(0),y.getPixelForValue(1),800,imageHeight)
+        // ctx.drawImage(image,x.getPixelForValue(0),y.getPixelForValue(0),1200,imageHeight)
+    }
+};
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels,beerImage)
 ChartJS.defaults.font.size = 24;
 ChartJS.defaults.font.weight = "bold";
 ChartJS.defaults.color = "white";
 ChartJS.defaults.borderColor = "#00000000";
+
 
 export default {
     name: "Ranking",
@@ -82,7 +133,15 @@ export default {
                 datasets: [
                     {
                         label: "Meter-Bier",
-                        backgroundColor: "#fed843",
+                        // backgroundColor: bar => {
+                        //     console.log(bar);
+                        //     const image = new Image();
+                        //     image.src = "/images/beer3.jpeg";
+                        //     const ctx = document.getElementById('ranking').getContext('2d');
+                        //     console.log("beer loaded")
+                        //     return  ctx.createPattern(image,'repeat-x');
+                        // },
+                        backgroundColor: "#00000000",
                         data: [40, 20, 12]
                     }
                 ],
@@ -110,7 +169,7 @@ export default {
                             left: 0,
                             right: 20
                         }
-                    }
+                    },
                 },
                 //maintainAspectRatio: false,
             }
@@ -129,6 +188,9 @@ export default {
             }).finally(() => {
                 this.processing = false;
             })
+            // const result = getData();
+            // this.chartData.labels = result.labels;
+            // this.chartData.datasets[0].data = result.datasets;
         },
 
     },
@@ -136,7 +198,15 @@ export default {
         this.getClubsRanking();
     },
     computed: {
-        //
+
+        beerPattern(){
+            const image = new Image();
+            image.src = "/images/beer_vertical.jpg";
+            const ctx = document.getElementById('ranking').getContext('2d');
+            console.log("beer loaded")
+            return ctx.createPattern(image,'repeat-x');
+        },
+
     }
 }
 </script>
