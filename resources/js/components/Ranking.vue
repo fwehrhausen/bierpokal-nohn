@@ -2,8 +2,8 @@
     <div class="container h-100 padding absolute center middle">
         <div class="row">
             <div class="col-12 text-center">
-                <div class="header d-flex justify-content-left align-items-center">
-                    <h1 class="text-left"><strong>BIERPOKAL</strong> Nohn 2023</h1>
+                <div class="header d-flex justify-content-left align-items-center text-center">
+                    <h3 class=""><strong>BIERPOKAL</strong> Nohn 2023</h3>
                 </div>
             </div>
         </div>
@@ -39,18 +39,8 @@ import 'swiper/css/navigation';
 //import './style.css';
 
 const image = new Image();
-image.src = "/images/beer_vertical.jpg";
+image.src = "/images/beer_final.jpg";
 
-// function getData(){
-//     var result = axios.get('/api/ranking').then(response => {
-//         return result = response.data;
-//     }).catch(({response: {data}}) => {
-//         //alert(data.message);
-//
-//     });
-//
-//     return result;
-// }
 
 
 const beerImage = {
@@ -61,26 +51,12 @@ const beerImage = {
 
         ctx.save();
 
-        // console.log("y3: " +y.getPixelForValue(3));
-        // console.log("x3: " +x.getPixelForValue(3));
-        // console.log("y2: " +y.getPixelForValue(2));
-        // console.log("x2: " +x.getPixelForValue(2));
-        // console.log("y1: " +y.getPixelForValue(1));
-        // console.log("x1: " +x.getPixelForValue(1));
-        // console.log("y0: " +y.getPixelForValue(0));
-        // console.log("x0: " +x.getPixelForValue(0));
-        // console.log(y);
-
-        let imageHeight = 30;
-
         let data = chart.data.datasets[0].data;
         let total = data.length;
         let xFactor = x.maxWidth / x.max;
         let yFactor = y.maxHeight/total -y.paddingTop;
 
-        console.log(y);
         for (let i = 0;i<total;i++) {
-            console.log();
             ctx.drawImage(image, x.getPixelForValue(0), y.getPixelForValue(i)-(yFactor/2), (xFactor*(data[i])), yFactor)
         }
         // ctx.drawImage(image,x.getPixelForValue(0),y.getPixelForValue(2),600,imageHeight)
@@ -90,7 +66,7 @@ const beerImage = {
 };
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels,beerImage)
-ChartJS.defaults.font.size = 20;
+ChartJS.defaults.font.size = 22;
 ChartJS.defaults.font.weight = "bold";
 ChartJS.defaults.color = "black";
 ChartJS.defaults.borderColor = "#00000000";
@@ -146,11 +122,15 @@ export default {
                     },
                     datalabels: {
                         anchor: "end",
-                        align: "end",
+                        align: "center",
                         padding: {
                             left: 0,
                             right: 20
+                        },
+                        margin:{
+                            left:-40
                         }
+
                     },
                 },
                 //maintainAspectRatio: false,
@@ -200,7 +180,7 @@ export default {
 }
 
 .container{
-    max-width: 1600px;
+    max-width: 1800px;
     background: #FFF;
     padding: 2em;
     border-radius: 0.5em;
@@ -235,7 +215,7 @@ export default {
     display: block;
     height: 660px;
     width: 280px;
-    left: calc(50% - (1600px/ 2));
+    left: calc(50% - (1850px/ 2));
     bottom: 50px;
     background-image: url(images/nohn_beer.png);
     background-repeat: no-repeat;
