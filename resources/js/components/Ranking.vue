@@ -91,14 +91,6 @@ export default {
                 datasets: [
                     {
                         label: "Meter-Bier",
-                        // backgroundColor: bar => {
-                        //     console.log(bar);
-                        //     const image = new Image();
-                        //     image.src = "/images/beer3.jpeg";
-                        //     const ctx = document.getElementById('ranking').getContext('2d');
-                        //     console.log("beer loaded")
-                        //     return  ctx.createPattern(image,'repeat-x');
-                        // },
                         backgroundColor: "#00000000",
                         data: [40, 20, 12]
                     }
