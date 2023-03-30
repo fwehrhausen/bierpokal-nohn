@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Events\MeterBeerSoldEvent;
 use App\Models\Club;
 use App\Models\SoldMeterBeer;
+use App\Models\Sponsor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use function Symfony\Component\Translation\t;
 
@@ -18,7 +21,7 @@ class BarController extends Controller
 
         $newSell->save();
 
-        MeterBeerSoldEvent::dispatch($club);
+        //MeterBeerSoldEvent::dispatch($club);
 
         return redirect("/theke");
     }
@@ -48,5 +51,27 @@ class BarController extends Controller
 //        }else{
 //            return $this->showAddClub();
 //        }
+    }
+
+    public function getSponsors(){
+
+        $showRankingAfterXSponsors = 3;
+        $sponsors = Sponsor::where('has_paid',true)->get();
+        $response = new Collection();
+
+        foreach ($sponsors as $i=> $sponsor){
+
+            if ($i !== 0 && $i%$showRankingAfterXSponsors===0){
+                $raninkg = new Sponsor();
+                $raninkg->name = "ranking";
+                $raninkg->has_paid = true;
+                $raninkg->created_at = now()->toDateTimeString();
+                $raninkg->updated_at = now()->toDateTimeString();
+                $response->add($raninkg);
+            }
+            $response->add($sponsor);
+        }
+
+        return $response;
     }
 }

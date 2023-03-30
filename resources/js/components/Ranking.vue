@@ -15,26 +15,31 @@
                     :spaceBetween="30"
                     :centeredSlides="true"
                     :autoplay="{
-      delay: 10000,
-      disableOnInteraction: false,
-    }"
+                      delay: 10000,
+                      disableOnInteraction: false,
+                    }"
                     :pagination="{
-      clickable: true,
-    }"
-                    :navigation="true"
+                      clickable: false,
+                    }"
+                    :navigation="false"
                     :modules="modules"
-                    class="mySwiper"
+                    class="h-100"
                 >
-                    <swiper-slide>
-                        <Bar
-                            id="ranking"
-                            :options="chartOptions"
-                            :data="chartData"
-                            v-if="loaded"
-                        />
+                    <swiper-slide class="d-flex justify-content-center align-items-center w-100 h-100 position-relative" v-for="sponsor in sponsors">
+
+                        <div class=" d-flex justify-content-center align-items-center h-100 sponsor-image-wrapper" v-if="sponsor.name !== 'ranking'">
+                            <img :src="sponsor.image_url" :alt="sponsor.name" class="h-100 sponsor-image">
+                        </div>
+                        <div class="h-100 w-100" v-else>
+                            <Bar
+                                ref="rankingChart"
+                                id="ranking"
+                                :options="chartOptions"
+                                :data="chartDataData"
+                            />
+                        </div>
                     </swiper-slide>
-                    <swiper-slide><img src="/images/sponsoren/renault_schaefer.png" alt="sp" style="max-height: 450px"></swiper-slide>
-                    <swiper-slide><img src="/images/sponsoren/auto_kloep.jpg" alt="sp" style="max-height: 450px"></swiper-slide>
+
                 </swiper>
             </div>
 
@@ -108,6 +113,11 @@ export default {
             modules: [Autoplay, Pagination, Navigation],
             data: null,
             clubs: [],
+            sponsors:[{
+                name:"",
+                image_url:"",
+            }],
+            ticker: undefined,
             loaded: false,
             processing: false,
             chartData: {
@@ -156,8 +166,11 @@ export default {
                 this.chartData.labels = response.data.labels;
                 this.chartData.datasets[0].data = response.data.datasets;
                 this.loaded = true;
+                const chart = this.$refs.rankingChart.chart;
+                //chart.update();
+
             }).catch(({response: {data}}) => {
-                alert(data.message);
+
 
             }).finally(() => {
                 this.processing = false;
@@ -166,13 +179,32 @@ export default {
             // this.chartData.labels = result.labels;
             // this.chartData.datasets[0].data = result.datasets;
         },
+        getSponsors(){
+            axios.get('/api/sponsors').then(response => {
+                this.sponsors = response.data;
+            }).catch(({response: {data}}) => {
+
+            }).finally(() => {
+                this.processing = false;
+            })
+        }
 
     },
     mounted() {
         this.getClubsRanking();
+        this.getSponsors();
+    },
+    beforeMount() {
+        this.ticker = setInterval(this.getClubsRanking, 10000);
+    },
+    beforeUnmount() {
+        clearInterval(this.ticker);
     },
     computed: {
 
+        chartDataData(){
+          return this.chartData;
+        },
         beerPattern() {
             const image = new Image();
             image.src = "/images/beer_vertical.jpg";
@@ -286,6 +318,17 @@ export default {
     -webkit-transform: translate(95%);
     -moz-transform: translate(95%);
     transform: translate(95%);
+}
+
+.sponsor-image{
+    max-width: 85%; /* or any custom size */
+    max-height: 85%;
+    object-fit: contain;
+    margin: -20px;
+}
+
+.sponsor-image-wrapper{
+
 }
 
 </style>
