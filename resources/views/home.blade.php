@@ -34,9 +34,18 @@
         height: 100%;
         width: 100%
     }
+    main {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        width: 100%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
     body {
         background-color: #d0cfcd !important;
-        background-image: url(images/bg_nohn.png);
+        background-image: url(/images/nohn_background.jpg);
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center bottom;
