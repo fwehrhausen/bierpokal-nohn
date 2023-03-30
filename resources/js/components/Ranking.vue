@@ -2,8 +2,9 @@
     <div class="container h-100 padding absolute center middle">
         <div class="row">
             <div class="col-12 text-center">
-                <div class="header d-flex justify-content-left align-items-center text-center">
-                    <h3 class=""><strong>BIERPOKAL</strong> Nohn 2023</h3>
+                <div class="header d-flex justify-content-left align-items-center">
+                    <!--<h1 class="text-left"><strong>BIERPOKAL</strong> Nohn 2023</h1>-->
+                    <img src="/images/wooden_sign.png" class="wooden-sign" alt="Biermeter Pokal Nohn 2023">
                 </div>
             </div>
         </div>
@@ -20,6 +21,8 @@
         </div>
     </div>
     <div class="beer-bottle"></div>
+    <div class="beer-bottle"></div>
+    <div class="beer-trophy"></div>
 </template>
 
 <script>
@@ -68,8 +71,8 @@ const beerImage = {
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels,beerImage)
 ChartJS.defaults.font.size = 22;
 ChartJS.defaults.font.weight = "bold";
-ChartJS.defaults.color = "black";
-ChartJS.defaults.borderColor = "#00000000";
+ChartJS.defaults.color = "white";
+ChartJS.defaults.borderColor = "#484848";
 
 
 export default {
@@ -180,20 +183,46 @@ export default {
 }
 
 .container{
-    max-width: 1800px;
-    background: #FFF;
+    position: relative;
+    max-width: 1600px;
+    background: transparent;
     padding: 2em;
     border-radius: 0.5em;
-    border: 5px solid #DDD;
     box-shadow: 0px 15px 15px -15px rgb(0 0 0 / 30%), 0px 20px 15px -10px rgb(0 0 0 / 30%);
+    z-index: 1;
+}
+.container:before {
+    content: "";
+    position: absolute;
+    top: -70px;
+    left: -70px;
+    height: calc(100% + 140px);
+    width: calc(100% + 140px);
+    background-color: transparent;
+    background-image: url(/images/nohn_frame.png);
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: -1;
 }
 .header{
-    border-bottom: 2px dashed #DDD;
     margin-bottom: 1em;
     padding-bottom: 1em;
     align-content: center;
     align-items: center;
     text-align: center;
+}
+
+.header .wooden-sign {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 100%;
+    max-width: 550px;
+    -webkit-transform: translate(-50%,-50%);
+       -moz-transform: translate(-50%,-50%);
+            transform: translate(-50%, -125px);
+    z-index: 2;
 }
 
 .header > .brand {
@@ -210,20 +239,41 @@ export default {
     width: 100%
 }
 
-.beer-bottle {
+.beer-bottle, .beer-trophy {
     position: fixed;
     display: block;
+    background-repeat: no-repeat;
+    background-size: 100%; 
+}
+
+.beer-bottle {
     height: 660px;
     width: 280px;
-    left: calc(50% - (1850px/ 2));
+    left: calc(50% - (1600px/ 2));
     bottom: 50px;
-    background-image: url(images/nohn_beer.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-image: url(/images/nohn_beer.png);
     z-index: -1;
     -webkit-transform: translateX(-75%);
        -moz-transform: translateX(-75%);
             transform: translateX(-75%);
+}
+
+.beer-bottle + .beer-bottle {
+    left: calc(50% - 965px);
+    bottom: 120px;
+    z-index: -2;
+}
+
+.beer-trophy {
+    height: 880px;
+    width: 670px;
+    left: 50%;
+    bottom: 15px;
+    background-image: url(/images/nohn_trophy.png);
+    z-index: -1;
+    -webkit-transform: translate(95%);
+       -moz-transform: translate(95%);
+            transform: translate(95%);
 }
 
 </style>
