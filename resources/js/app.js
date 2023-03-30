@@ -16,11 +16,13 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import Ranking from './components/Ranking.vue';
+import Stats from './components/Stats.vue';
 
 //Add these two components.
 //app.component('chat-messages', require('./components/ChatMessages.vue').default);
 //app.component('chat-form', require('./components/ChatForm.vue').default);
 app.component('ranking',Ranking);
+app.component('stats',Stats);
 
 
 /**

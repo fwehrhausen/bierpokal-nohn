@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BeerController;
+use App\Http\Controllers\StatisticController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/ranking',[BeerController::class,'getRanking']);
+Route::get('/meter-beer-prognosis',[StatisticController::class,'nextMeterBeerProg']);

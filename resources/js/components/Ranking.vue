@@ -68,7 +68,7 @@ const beerImage = {
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels,beerImage)
 ChartJS.defaults.font.size = 22;
 ChartJS.defaults.font.weight = "bold";
-ChartJS.defaults.color = "black";
+ChartJS.defaults.color = "#fff";
 ChartJS.defaults.borderColor = "#00000000";
 
 
@@ -109,6 +109,7 @@ export default {
                             font: {
                                 size: 18,
                                 weight: "bold",
+                                color: "black"
                             }
                         }
                     },
@@ -172,12 +173,16 @@ export default {
 }
 
 .container{
-    max-width: 1800px;
+    max-width: 80%;
     background: #FFF;
+    color: white;
     padding: 2em;
     border-radius: 0.5em;
     border: 5px solid #DDD;
     box-shadow: 0px 15px 15px -15px rgb(0 0 0 / 30%), 0px 20px 15px -10px rgb(0 0 0 / 30%);
+    background-image: url("/images/test-schiefer.png");
+    background-repeat: no-repeat;
+    background-clip: revert;
 }
 .header{
     border-bottom: 2px dashed #DDD;
@@ -207,9 +212,9 @@ export default {
     display: block;
     height: 660px;
     width: 280px;
-    left: calc(50% - (1850px/ 2));
+    left: calc(50% - (80%/ 2));
     bottom: 50px;
-    background-image: url(images/nohn_beer.png);
+    background-image: url(/images/nohn_beer.png);
     background-repeat: no-repeat;
     background-size: 100%;
     z-index: -1;

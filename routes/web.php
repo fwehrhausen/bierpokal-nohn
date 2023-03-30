@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BarController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,13 +20,22 @@ Route::get('/', function () {
     return view('home');
 });
 
-Auth::routes();
+Auth::routes([
+    "register" => false,
+]);
 
 Route::middleware(['auth', 'verified'])->group( function () {
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/stats', [HomeController::class, 'stats'])->name('stats');
+
     Route::get('/theke',[BarController::class,'showClubs'])->name('clubs.show');
     Route::get('/theke/{club}/add-meter',[BarController::class,'sellMeterToClub'])->name('club.sell-meter');
+
+    Route::get('/verein/add',[BarController::class,'showAddClub'])->name('club.show-add');
+    Route::post('/verein/add',[BarController::class,'addClub'])->name('club.add');
+
+
 
     Route::get('/chat', [App\Http\Controllers\ChatsController::class, 'index']);
     Route::get('/messages', [App\Http\Controllers\ChatsController::class, 'fetchMessages']);

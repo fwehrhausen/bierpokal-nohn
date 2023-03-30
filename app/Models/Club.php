@@ -16,6 +16,10 @@ class Club extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "name"
+    ];
+
     protected $appends = [
         "bought_meter_beers_count",
         "last_bought_meter_beer_at",
