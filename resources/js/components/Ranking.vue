@@ -10,12 +10,32 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <Bar
-                    id="ranking"
-                    :options="chartOptions"
-                    :data="chartData"
+                <swiper
                     v-if="loaded"
-                />
+                    :spaceBetween="30"
+                    :centeredSlides="true"
+                    :autoplay="{
+      delay: 10000,
+      disableOnInteraction: false,
+    }"
+                    :pagination="{
+      clickable: true,
+    }"
+                    :navigation="true"
+                    :modules="modules"
+                    class="mySwiper"
+                >
+                    <swiper-slide>
+                        <Bar
+                            id="ranking"
+                            :options="chartOptions"
+                            :data="chartData"
+                            v-if="loaded"
+                        />
+                    </swiper-slide>
+                    <swiper-slide><img src="/images/sponsoren/renault_schaefer.png" alt="sp" style="max-height: 450px"></swiper-slide>
+                    <swiper-slide><img src="/images/sponsoren/auto_kloep.jpg" alt="sp" style="max-height: 450px"></swiper-slide>
+                </swiper>
             </div>
 
         </div>
@@ -45,22 +65,23 @@ const image = new Image();
 image.src = "/images/beer_final.jpg";
 
 
-
 const beerImage = {
-    id:"beerImage",
+    id: "beerImage",
     beforeDraw(chart, args, options) {
-        const {ctx,chartArea:{top,bottom,left,right,width,height},
-            scales:{x,y}} = chart;
+        const {
+            ctx, chartArea: {top, bottom, left, right, width, height},
+            scales: {x, y}
+        } = chart;
 
         ctx.save();
 
         let data = chart.data.datasets[0].data;
         let total = data.length;
         let xFactor = x.maxWidth / x.max;
-        let yFactor = y.maxHeight/total -y.paddingTop;
+        let yFactor = y.maxHeight / total - y.paddingTop;
 
-        for (let i = 0;i<total;i++) {
-            ctx.drawImage(image, x.getPixelForValue(0), y.getPixelForValue(i)-(yFactor/2), (xFactor*(data[i])), yFactor)
+        for (let i = 0; i < total; i++) {
+            ctx.drawImage(image, x.getPixelForValue(0), y.getPixelForValue(i) - (yFactor / 2), (xFactor * (data[i])), yFactor)
         }
         // ctx.drawImage(image,x.getPixelForValue(0),y.getPixelForValue(2),600,imageHeight)
         // ctx.drawImage(image,x.getPixelForValue(0),y.getPixelForValue(1),800,imageHeight)
@@ -68,7 +89,7 @@ const beerImage = {
     }
 };
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels,beerImage)
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels, beerImage)
 ChartJS.defaults.font.size = 22;
 ChartJS.defaults.font.weight = "bold";
 ChartJS.defaults.color = "white";
@@ -117,15 +138,10 @@ export default {
                         }
                     },
                     datalabels: {
-                        anchor: "end",
-                        align: "center",
-                        padding: {
-                            left: 0,
-                            right: 20
-                        },
-                        margin:{
-                            left:-40
-                        }
+                        anchor: "middle",
+                        color: "black",
+                        size: 16,
+
 
                     },
                 },
@@ -157,12 +173,12 @@ export default {
     },
     computed: {
 
-        beerPattern(){
+        beerPattern() {
             const image = new Image();
             image.src = "/images/beer_vertical.jpg";
             const ctx = document.getElementById('ranking').getContext('2d');
             console.log("beer loaded")
-            return ctx.createPattern(image,'repeat-x');
+            return ctx.createPattern(image, 'repeat-x');
         },
 
     }
@@ -171,11 +187,11 @@ export default {
 
 <style scoped>
 
-#ranking{
+#ranking {
     font-size: 20px;
 }
 
-.container{
+.container {
     position: relative;
     max-width: 1600px;
     background: transparent;
@@ -184,6 +200,7 @@ export default {
     box-shadow: 0px 15px 15px -15px rgb(0 0 0 / 30%), 0px 20px 15px -10px rgb(0 0 0 / 30%);
     z-index: 1;
 }
+
 .container:before {
     content: "";
     position: absolute;
@@ -198,7 +215,8 @@ export default {
     background-repeat: no-repeat;
     z-index: -1;
 }
-.header{
+
+.header {
     margin-bottom: 1em;
     padding-bottom: 1em;
     align-content: center;
@@ -212,9 +230,9 @@ export default {
     top: 0;
     width: 100%;
     max-width: 550px;
-    -webkit-transform: translate(-50%,-50%);
-       -moz-transform: translate(-50%,-50%);
-            transform: translate(-50%, -125px);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -184px); /*modify last param to control height */
     z-index: 2;
 }
 
@@ -228,6 +246,7 @@ export default {
     border-radius: 50%;
     box-shadow: inset 0px 0px 0px 10px rgb(0 0 0 / 5%), 0px 25px 20px -20px rgb(0 0 0 / 50%);
 }
+
 .header > .brand > img {
     width: 100%
 }
@@ -242,13 +261,13 @@ export default {
 .beer-bottle {
     height: 660px;
     width: 280px;
-    left: calc(50% - (1600px/ 2));
+    left: calc(50% - (1600px / 2));
     bottom: 50px;
     background-image: url(/images/nohn_beer.png);
     z-index: -1;
     -webkit-transform: translateX(-75%);
-       -moz-transform: translateX(-75%);
-            transform: translateX(-75%);
+    -moz-transform: translateX(-75%);
+    transform: translateX(-75%);
 }
 
 .beer-bottle + .beer-bottle {
@@ -265,8 +284,8 @@ export default {
     background-image: url(/images/nohn_trophy.png);
     z-index: -1;
     -webkit-transform: translate(95%);
-       -moz-transform: translate(95%);
-            transform: translate(95%);
+    -moz-transform: translate(95%);
+    transform: translate(95%);
 }
 
 </style>
