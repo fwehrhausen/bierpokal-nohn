@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use function Symfony\Component\Translation\t;
 
 class BarController extends Controller
 {
@@ -25,13 +24,26 @@ class BarController extends Controller
 
         return redirect("/theke");
     }
+    public function subMeterToClub(Club $club){
+
+        $lastSell = SoldMeterBeer::where('club_id',$club->id)->orderByDesc('created_at')->first();
+
+        if ($lastSell !== null){
+            $lastSell->delete();
+        }
+        //MeterBeerSoldEvent::dispatch($club);
+
+        return redirect("/theke");
+    }
 
     public function showClubs(){
 
         $clubs = Club::orderBy('name')->get();
+        $openMeters = SoldMeterBeer::with(["club"])->whereNull('delivered_at')->get();
 
         return view('bar.clubs')->with([
-            "clubs" => $clubs
+            "clubs" => $clubs,
+            "openMeters" => $openMeters
         ]);
     }
 
@@ -53,15 +65,16 @@ class BarController extends Controller
 //        }
     }
 
+
     public function getSponsors(){
 
-        $showRankingAfterXSponsors = 3;
+        $showRankingAfterXSponsors = 2;
         $sponsors = Sponsor::where('has_paid',true)->get();
         $response = new Collection();
 
         foreach ($sponsors as $i=> $sponsor){
 
-            if ($i !== 0 && $i%$showRankingAfterXSponsors===0){
+            if ($i%$showRankingAfterXSponsors===0){
                 $raninkg = new Sponsor();
                 $raninkg->name = "ranking";
                 $raninkg->has_paid = true;
@@ -74,4 +87,11 @@ class BarController extends Controller
 
         return $response;
     }
+    public function getSponsorsOnly(){
+
+        $sponsors = Sponsor::where('has_paid',true)->get();
+
+        return $sponsors;
+    }
+
 }

@@ -22,9 +22,18 @@ class SponsorSeeder extends Seeder
             "Müller-Kalk" => "mueller_kalk.jpg",
             "Renault Schäfer" => "renault_schaefer.png",
             "Allfinanz Büro Hertel" => "generali_hertel.jpg",
+            "Physiotherapie Raitz" => "raitz_2.png",
             "Physiotherapie Raitz" => "raitz_stellenanzeige.jpg",
             "Fahrschule Hecken" =>  "fahrschule_hecken.jpeg",
             "Autoservice Kirwel" => "autoservice_kirwel.jpeg",
+            "Gröner Hof" => "groener_hof.jpeg",
+            "Fenster Mörsch" => "Moersch_Monteur.png",
+            "M & K Niederehe" => "MundK.png",
+            "Nelles" => "nelles.png",
+            "Nohner Mühle" => "nohner-muehle.png",
+            "Raitzwäsche" => "raitzwaesche.png",
+            "Tischlerei Ueberhofen" => "Uebi.png",
+
         ];
 
         foreach ($sponsors as $name => $imageName){

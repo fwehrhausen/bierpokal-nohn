@@ -7,12 +7,26 @@
                 {{ dateTime.hours }}:{{ dateTime.minutes }}<small style="font-size: 38px">:{{
                     dateTime.seconds
                 }}</small>
+                <h3 class="effect-text"><i class="fa-solid fa-triangle-exclamation"></i> Experimentell</h3>
             </div>
+
+            <div class="mt-5" style="margin-left: 20px;">
+                <h3>Offene Bestellungen</h3>
+                <table class="table table-responsive">
+                    <tr v-for="open_order in open_orders">
+                        <td>
+                            <h4>{{ open_order.club.name }}</h4>
+                            <p>bestellt um: {{ new Date(open_order.created_at).toLocaleTimeString() }}</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
 
         </div>
         <div class="col-7">
             <h1 class="headline effect-text">Biermeter-Prognose</h1>
-            <h3 class="effect-text"><i class="fa-solid fa-triangle-exclamation"></i> Experimentell</h3>
+
 
             <div class="prognoses mt-5">
 
@@ -58,6 +72,7 @@ export default {
                     timestamp: "",
                 }
             ],
+            open_orders: [],
             ticker: undefined,
         }
     },
@@ -84,7 +99,8 @@ export default {
         },
         updatePrognostic() {
             axios.get('/api/meter-beer-prognosis').then(response => {
-                this.next_meters = response.data;
+                this.next_meters = response.data.prog;
+                this.open_orders = response.data.open_orders;
             }).catch(({response: {data}}) => {
                 //alert(data.message);
 
@@ -117,10 +133,6 @@ export default {
     letter-spacing: 0.1em;
     color: #ffffff;
     text-align: center;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     color: #daf6ff;
     text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
 }

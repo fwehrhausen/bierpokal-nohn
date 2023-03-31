@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('sold_meter_beers', function (Blueprint $table) {
             $table->id();
+            $table->dateTime("delivered_at")->nullable()->default(null);
             $table->foreignId('club_id')->references('id')->on('clubs');
             $table->timestamps();
         });

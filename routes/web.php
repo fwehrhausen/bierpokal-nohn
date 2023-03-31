@@ -17,7 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home-v2');
+});
+
+Route::get('/v2', function () {
+    return view('home-v2');
+});
+
+Route::get("/werbung",function (){
+    return view("advertising");
 });
 
 Auth::routes([
@@ -31,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group( function () {
 
     Route::get('/theke',[BarController::class,'showClubs'])->name('clubs.show');
     Route::get('/theke/{club}/add-meter',[BarController::class,'sellMeterToClub'])->name('club.sell-meter');
+    Route::get('/theke/{club}/sub-meter',[BarController::class,'subMeterToClub'])->name('club.sell-meter');
 
     Route::get('/verein/add',[BarController::class,'showAddClub'])->name('club.show-add');
     Route::post('/verein/add',[BarController::class,'addClub'])->name('club.add');

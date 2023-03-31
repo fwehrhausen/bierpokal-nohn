@@ -16,12 +16,16 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import Ranking from './components/Ranking.vue';
+import RankingChart from './components/RankingChart.vue';
+import Advertising from './components/Advertising.vue';
 import Stats from './components/Stats.vue';
 
 //Add these two components.
 //app.component('chat-messages', require('./components/ChatMessages.vue').default);
 //app.component('chat-form', require('./components/ChatForm.vue').default);
 app.component('ranking',Ranking);
+app.component('advertising',Advertising);
+app.component('ranking-chart',RankingChart);
 app.component('stats',Stats);
 
 

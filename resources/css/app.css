@@ -1,2 +1,6 @@
 @import "./theme.css";
 
+@font-face {
+    src: url("/fonts/chalck.ttf");
+    font-family: "chalck";
+}

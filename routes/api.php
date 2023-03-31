@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/ranking',[BeerController::class,'getRanking']);
+Route::get('/ranking-v2',[StatisticController::class,'getRanking']);
 Route::get('/meter-beer-prognosis',[StatisticController::class,'nextMeterBeerProg']);
 
 Route::get('/sponsors',[BarController::class,'getSponsors']);
+Route::get('/sponsors-only',[BarController::class,'getSponsorsOnly']);
