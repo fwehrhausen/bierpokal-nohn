@@ -13,17 +13,17 @@
 
                 <!--span
 
-:autoplay="{
-                      delay: 10000,
-                      disableOnInteraction: false,
-                    }"
+
                     -->
 
                 <swiper
                     v-if="ranking && sponsors"
                     :spaceBetween="30"
                     :centeredSlides="true"
-
+                    :autoplay="{
+                      delay: 10000,
+                      disableOnInteraction: false,
+                    }"
                     :pagination="{
                       clickable: false,
                     }"
@@ -294,7 +294,7 @@ ol li:nth-child(5n) {
     max-width: 900px;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
-    transform: translate(-50%, -110px); /*modify last param to control height */
+    transform: translate(-50%, -100px); /*modify last param to control height */
     z-index: 2;
 }
 
