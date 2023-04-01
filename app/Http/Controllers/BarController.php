@@ -36,6 +36,20 @@ class BarController extends Controller
         return redirect("/theke");
     }
 
+    public function deleteOrder(SoldMeterBeer $soldMeterBeer){
+        $soldMeterBeer->delete();
+
+        return redirect("/theke");
+    }
+
+    public function finishOrder(SoldMeterBeer $soldMeterBeer){
+
+        $soldMeterBeer->delivered_at = Carbon::now();
+        $soldMeterBeer->save();
+
+        return redirect("/theke");
+    }
+
     public function showClubs(){
 
         $clubs = Club::orderBy('name')->get();

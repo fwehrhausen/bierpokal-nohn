@@ -37,14 +37,14 @@
                 @forelse($openMeters as $openMeter)
                     <tr>
                         <td>
-                            <a href="#" style="font-size: 40px;"><i class="fa-solid fa-square-check text-success"></i></a>
+                            <a href="/theke/{{$openMeter["id"]}}/finish" style="font-size: 40px;"><i class="fa-solid fa-square-check text-success"></i></a>
                         </td>
                         <td>
                             <h4>{{$openMeter["club"]["name"]}}</h4>
                             <p>um {{\Carbon\Carbon::parse($openMeter["created_at"])->timezone('Europe/Berlin')->toTimeString()}}</p>
                         </td>
                         <td>
-                            <a href="#" style="font-size: 16px;"><i class="fa-solid fa-trash text-danger"></i></a>
+                            <a href="/theke/{{$openMeter["id"]}}/delete" style="font-size: 16px;"><i class="fa-solid fa-trash text-danger"></i></a>
                         </td>
                     </tr>
                 @empty

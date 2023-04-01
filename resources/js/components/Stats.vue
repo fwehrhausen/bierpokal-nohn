@@ -30,19 +30,19 @@
 
             <div class="prognoses mt-5">
 
-                <div v-for="next in next_meters">
+                <table class="table">
+                    <tr style="background-color: gray; color: white">
+                        <th><h4>Verein</h4></th>
+                        <th><h4>nächster Meter</h4></th>
+                    </tr>
+                <tr v-for="next in next_meters">
 
-                    <div class="float-end">
-                        nächster in: {{ next.next_string }}
-                    </div>
-                    <div class="progress mb-3">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                             role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
-                             style="width: 100%">{{ next.club }}
-                        </div>
-                    </div>
-
-                </div>
+                    <td><h4>{{ next.club }}</h4></td>
+                    <td>
+                        <h4>{{ next.next_string }}</h4>
+                    </td>
+                </tr>
+                </table>
             </div>
 
 
@@ -74,6 +74,7 @@ export default {
             ],
             open_orders: [],
             ticker: undefined,
+            beer_ticker: undefined,
         }
     },
     methods: {
@@ -100,14 +101,22 @@ export default {
         updatePrognostic() {
             axios.get('/api/meter-beer-prognosis').then(response => {
                 this.next_meters = response.data.prog;
-                this.open_orders = response.data.open_orders;
             }).catch(({response: {data}}) => {
                 //alert(data.message);
 
             }).finally(() => {
                 this.processing = false;
             })
+        },
+        getOpenMeters(){
+            axios.get('/api/open-beer-meter').then(response => {
+                this.open_orders = response.data;
+            }).catch(({response: {data}}) => {
+                //alert(data.message);
 
+            }).finally(() => {
+                this.processing = false;
+            })
         }
 
     },
@@ -115,10 +124,12 @@ export default {
         this.updatePrognostic();
         this.timer = setInterval(this.setDateTime, 1000);
         this.ticker = setInterval(this.updatePrognostic, 10000);
+        this.beer_ticker = setInterval(this.getOpenMeters, 10000);
     },
     beforeUnmount() {
         clearInterval(this.timer);
         clearInterval(this.ticker);
+        clearInterval(this.beer_ticker);
     },
 }
 </script>
@@ -149,6 +160,10 @@ export default {
     color: #ffffff;
     color: #daf6ff;
     text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+}
+
+.prognoses{
+    font-weight: bold;
 }
 
 .progress {

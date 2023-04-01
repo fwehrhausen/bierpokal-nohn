@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\SoldMeterBeer;
 use Illuminate\Database\Eloquent\Collection;
 
 class BeerController extends Controller
@@ -38,5 +39,12 @@ class BeerController extends Controller
             "labels" => $chartLabels,
             "datasets" => $chartData,
         ];
+    }
+
+    public function getOpenMeters(){
+        $openMeters = SoldMeterBeer::with(["club"])->whereNull('delivered_at')->get();
+
+        return $openMeters;
+
     }
 }

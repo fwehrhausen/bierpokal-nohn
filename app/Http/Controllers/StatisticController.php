@@ -15,7 +15,7 @@ class StatisticController extends Controller
 
         $next = new Collection();
 
-        $openMeters = SoldMeterBeer::with(["club"])->whereNull('delivered_at')->get();
+
         $soldMeterBeers = SoldMeterBeer::with(['club'])->orderBy('created_at')->get()->groupBy('club_id');
 
         $now = Carbon::now();
@@ -82,7 +82,7 @@ class StatisticController extends Controller
 
         return [
             "prog" => $result->values()->all(),
-            "open_orders" => $openMeters,
+
             ];
     }
 

@@ -41,6 +41,9 @@ Route::middleware(['auth', 'verified'])->group( function () {
     Route::get('/theke/{club}/add-meter',[BarController::class,'sellMeterToClub'])->name('club.sell-meter');
     Route::get('/theke/{club}/sub-meter',[BarController::class,'subMeterToClub'])->name('club.sell-meter');
 
+    Route::get('/theke/{soldMeterBeer}/finish',[BarController::class,'finishOrder'])->name('finishOrder');
+    Route::get('/theke/{soldMeterBeer}/delete',[BarController::class,'deleteOrder'])->name('deleteOrder');
+
     Route::get('/verein/add',[BarController::class,'showAddClub'])->name('club.show-add');
     Route::post('/verein/add',[BarController::class,'addClub'])->name('club.add');
 

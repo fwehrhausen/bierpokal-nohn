@@ -11,16 +11,19 @@
         <div class="row">
             <div class="col-12">
 
+                <!--span
 
+:autoplay="{
+                      delay: 10000,
+                      disableOnInteraction: false,
+                    }"
+                    -->
 
                 <swiper
                     v-if="ranking && sponsors"
                     :spaceBetween="30"
                     :centeredSlides="true"
-                    :autoplay="{
-                      delay: 10000,
-                      disableOnInteraction: false,
-                    }"
+
                     :pagination="{
                       clickable: false,
                     }"
@@ -45,7 +48,7 @@
                                             <tr v-for="club in ranking.top10">
                                                 <td class="table-label club-label">{{ club.name }}</td>
                                                 <td class="count-label">
-                                                    <ol class="count" v-if="club.bought_meter_beers_count < 80">
+                                                    <ol class="count" v-bind:class="(club.bought_meter_beers_count>4)?'fix-margin':''" v-if="club.bought_meter_beers_count < 80">
                                                         <li v-for="sold_meter in club.bought_meter_beers"></li>
                                                     </ol>
                                                     <span class="count" style="margin-left: 30px" v-else>
@@ -177,6 +180,7 @@ export default {
     font-family: "chalck-v2";
 }
 
+
 .count-list {
 
     font-size: 25px;
@@ -184,7 +188,7 @@ export default {
 }
 
 .other-list {
-    margin: -5px 40px 25px 20px;
+    margin: -10px 40px 25px 20px;
 }
 
 .ranking-table {
@@ -194,6 +198,14 @@ export default {
 
 .other {
     font-size: 18px;
+}
+
+.count {
+    margin: 0px;
+}
+
+.fix-margin{
+    margin-top: -30px;
 }
 
 ol {
@@ -227,9 +239,7 @@ ol li:nth-child(5n) {
     margin-left: 20px;
 }
 
-.count {
-    margin-top: -30px;
-}
+
 
 .club-label {
 }
