@@ -4,7 +4,7 @@
             <div class="col-12 text-center">
                 <div class="header d-flex justify-content-left align-items-center">
                     <!--<h1 class="text-left"><strong>BIERPOKAL</strong> Nohn 2023</h1>-->
-                    <img src="/images/wooden_sign.png" class="wooden-sign" alt="Biermeter Pokal Nohn 2023">
+                    <img src="/images/wooden_sign_23.png" class="wooden-sign" alt="Biermeter Pokal Nohn 2023">
                 </div>
             </div>
         </div>
@@ -236,10 +236,10 @@ export default {
 .container:before {
     content: "";
     position: absolute;
-    top: -70px;
-    left: -70px;
-    height: calc(100% + 140px);
-    width: calc(100% + 140px);
+    top: -85px;
+    left: -139px;
+    height: calc(100% + 164px);
+    width: calc(100% + 265px);
     background-color: transparent;
     background-image: url(/images/nohn_frame.png);
     background-size: 100%;

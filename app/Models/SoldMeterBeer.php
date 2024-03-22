@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $club_id
+ * @property string $delivered_at
+ * @property string $meter_return_at
  */
 class SoldMeterBeer extends Model
 {

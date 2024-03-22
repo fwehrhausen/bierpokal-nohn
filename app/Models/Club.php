@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $name
- * @property int bought_meter_beers_count
+ * @property int $bought_meter_beers_count
  * @property string last_bought_meter_beer_at
+ * @property int $meters_in_circulation
  */
 class Club extends Model
 {
@@ -23,6 +24,7 @@ class Club extends Model
     protected $appends = [
         "bought_meter_beers_count",
         "last_bought_meter_beer_at",
+        "meters_in_circulation",
     ];
 
     public function boughtMeterBeers(){
@@ -37,9 +39,17 @@ class Club extends Model
     public function getLastBoughtMeterBeerAtAttribute(){
         $lastAt = $this->boughtMeterBeers()->first();
         if ($lastAt !== null){
-            return Carbon::parse($lastAt->created_at)->toTimeString(). " Uhr";
+            return Carbon::parse($lastAt->created_at)->format("H:i"). " Uhr";
         }else{
             return " - ";
         }
+    }
+
+    public function getMetersInCirculationAttribute(){
+        return SoldMeterBeer
+            ::whereNull('meter_return_at')
+            ->whereNotNull('delivered_at')
+            ->where('club_id',$this->id)
+            ->count();
     }
 }

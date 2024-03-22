@@ -4,17 +4,12 @@
             <div class="col-12 text-center">
                 <div class="header d-flex justify-content-left align-items-center">
                     <!--<h1 class="text-left"><strong>BIERPOKAL</strong> Nohn 2023</h1>-->
-                    <img src="/images/wooden_sign.png" class="wooden-sign" alt="Biermeter Pokal Nohn 2023">
+                    <img src="/images/wooden_sign.png" class="wooden-sign" alt="Biermeter Pokal Nohn">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-
-                <!--span
-
-
-                    -->
 
                 <swiper
                     v-if="ranking && sponsors"
@@ -31,9 +26,11 @@
                     :modules="modules"
                     class="h-100"
                 >
-                    <swiper-slide class="d-flex justify-content-center align-items-center w-100 h-100 position-relative" v-for="sponsor in sponsors">
+                    <swiper-slide class="d-flex justify-content-center align-items-center w-100 h-100 position-relative"
+                                  v-for="sponsor in sponsors">
 
-                        <div class=" d-flex justify-content-center align-items-center h-100 sponsor-image-wrapper" v-if="sponsor.name !== 'ranking'">
+                        <div class=" d-flex justify-content-center align-items-center h-100 sponsor-image-wrapper"
+                             v-if="sponsor.name !== 'ranking'">
                             <img :src="sponsor.image_url" :alt="sponsor.name" class="h-100 sponsor-image">
                         </div>
                         <div v-else>
@@ -43,33 +40,42 @@
                                         <div class="d-flex justify-content-center">
                                             <h1 class="top-headline">Top 10</h1>
                                         </div>
-                                        <table class="table table-responsive ranking-table">
+
+                                        <table class="table ranking-table">
 
                                             <tr v-for="club in ranking.top10">
-                                                <td class="table-label club-label">{{ club.name }}</td>
+                                                <td class="table-label club-label ">{{ club.name }}</td>
                                                 <td class="count-label">
-                                                    <ol class="count" v-bind:class="(club.bought_meter_beers_count>4)?'fix-margin':''" v-if="club.bought_meter_beers_count < 80">
+                                                    <ol class="count"
+                                                        v-bind:class="(club.bought_meter_beers_count>4)?'fix-margin':''"
+                                                        v-if="club.bought_meter_beers_count < 80">
                                                         <li v-for="sold_meter in club.bought_meter_beers"></li>
                                                     </ol>
                                                     <span class="count" style="margin-left: 30px" v-else>
-                                            {{club.bought_meter_beers_count}}
+                                            {{ club.bought_meter_beers_count }}
                                         </span>
                                                 </td>
+                                                <!--td>
+                                                     {{club.bought_meter_beers_count}}
+                                                </td-->
                                             </tr>
+
                                         </table>
                                     </div>
                                 </div>
                                 <div class="col-12 chalck-font other-list">
-                                    <div class="">
-                                        <span style="font-size: 22px; margin-right: 10px">Andere:</span><button type="button" class="btn btn-outline-secondary m-1 text-white other"
-                                                                                                                v-for="other in ranking.last">
-                                        {{ other.name }}: <span class="badge">{{ other.bought_meter_beers_count }}</span>
-                                    </button>
+                                    <div class="" style="max-width: 95%;">
+                                        <span style="font-size: 22px; margin-right: 10px">Andere:</span>
+                                        <button type="button" class="btn btn-outline-secondary m-1 text-white other"
+                                                v-for="other in ranking.last">
+                                            {{ other.name }}: <span class="badge">{{
+                                                other.bought_meter_beers_count
+                                            }}</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
 
                     </swiper-slide>
@@ -194,6 +200,24 @@ export default {
 .ranking-table {
     margin-left: 20px;
     color: white;
+    width: 95% !important;
+}
+
+table td {
+    width: 100%;
+}
+
+table td:first-child {
+    width: auto;
+    white-space: nowrap;
+}
+
+table td:nth-child(2){
+    padding-left: 20px;
+}
+table td:nth-child(3){
+    width: auto;
+    white-space: nowrap;
 }
 
 .other {
@@ -204,7 +228,7 @@ export default {
     margin: 0px;
 }
 
-.fix-margin{
+.fix-margin {
     margin-top: -30px;
 }
 
@@ -238,7 +262,6 @@ ol li:nth-child(5n) {
     margin-top: 22px;
     margin-left: 20px;
 }
-
 
 
 .club-label {
@@ -289,7 +312,7 @@ ol li:nth-child(5n) {
 .header .wooden-sign {
     position: absolute;
     left: 50%;
-    top: 0;
+    top: -3px;
     width: 100%;
     max-width: 900px;
     -webkit-transform: translate(-50%, -50%);
@@ -330,6 +353,16 @@ ol li:nth-child(5n) {
     -webkit-transform: translateX(-75%);
     -moz-transform: translateX(-75%);
     transform: translateX(-75%);
+}
+
+.swiper-pagination-bullet {
+    color: transparent !important;
+    background: transparent !important;
+}
+
+.swiper-pagination-bullet:active {
+    color: transparent !important;
+    background: transparent !important;
 }
 
 .beer-bottle + .beer-bottle {

@@ -53,12 +53,31 @@ class BarController extends Controller
     public function showClubs(){
 
         $clubs = Club::orderBy('name')->get();
-        $openMeters = SoldMeterBeer::with(["club"])->whereNull('delivered_at')->get();
+        $openMeters = SoldMeterBeer
+            ::with(["club"])
+            ->whereNull('delivered_at')
+            ->get();
 
         return view('bar.clubs')->with([
             "clubs" => $clubs,
             "openMeters" => $openMeters
         ]);
+    }
+
+    public function returnMeter(Club $club){
+
+        /** @var null|SoldMeterBeer $lastUnreturnedMeter */
+        $lastUnreturnedMeter = SoldMeterBeer::whereNotNull('delivered_at')
+            ->where('club_id',$club->id)
+            ->whereNull("meter_return_at")
+            ->first();
+
+        if ($lastUnreturnedMeter !== null){
+            $lastUnreturnedMeter->meter_return_at = Carbon::now();
+            $lastUnreturnedMeter->save();
+        }
+
+        return redirect("/theke");
     }
 
     public function showAddClub(){
@@ -86,17 +105,24 @@ class BarController extends Controller
         $sponsors = Sponsor::where('has_paid',true)->get();
         $response = new Collection();
 
-        foreach ($sponsors as $i=> $sponsor){
+        if ($sponsors->count() >0) {
+            foreach ($sponsors as $i => $sponsor) {
 
-            if ($i%$showRankingAfterXSponsors===0){
-                $raninkg = new Sponsor();
-                $raninkg->name = "ranking";
-                $raninkg->has_paid = true;
-                $raninkg->created_at = now()->toDateTimeString();
-                $raninkg->updated_at = now()->toDateTimeString();
-                $response->add($raninkg);
+                if ($i % $showRankingAfterXSponsors === 0) {
+                    $ranking = new Sponsor();
+                    $ranking->name = "ranking";
+                    $ranking->has_paid = true;
+                    $ranking->created_at = now()->toDateTimeString();
+                    $ranking->updated_at = now()->toDateTimeString();
+                    $response->add($ranking);
+                }
+                $response->add($sponsor);
             }
-            $response->add($sponsor);
+        }else{
+            $response->add(new Sponsor([
+                "name" => "ranking",
+                "has_paid" => true,
+            ]));
         }
 
         return $response;

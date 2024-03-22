@@ -4,7 +4,7 @@
             <div class="col-12 text-center">
                 <div class="header d-flex justify-content-left align-items-center">
                     <!--<h1 class="text-left"><strong>BIERPOKAL</strong> Nohn 2023</h1>-->
-                    <img src="/images/wooden_sign.png" class="wooden-sign" alt="Biermeter Pokal Nohn 2023">
+                    <img src="/images/wooden_sign_23.png" class="wooden-sign" alt="Biermeter Pokal Nohn 2023">
                 </div>
             </div>
         </div>

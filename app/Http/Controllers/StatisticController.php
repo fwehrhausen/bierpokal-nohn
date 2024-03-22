@@ -117,4 +117,51 @@ class StatisticController extends Controller
             "last" => $copy->splice(10,100),
         ];
     }
+
+    public function getEvaluation(){
+
+        $result = new Collection();
+        $totalAvrg =0;
+        $clubs = Club::with(['boughtMeterBeers'])->get();
+
+        foreach ($clubs as $club){
+            $clubAvrg = 0;
+            $clubDiffTotal = 0;
+            $totalDiff = 0;
+            $totalForArvg = 0;
+            $totalForTotalArvg = 0;
+
+            foreach ($club->boughtMeterBeers as $i => $boughtMeterBeer){
+
+                if ($i > 0){
+                    $diff = Carbon::parse($last->created_at)->diffInMinutes(Carbon::parse($boughtMeterBeer->created_at));
+                    $clubDiffTotal += $diff;
+                    $totalDiff += $diff;
+                    $totalForArvg++;
+                    $totalForTotalArvg++;
+                }
+
+                $last = $boughtMeterBeer;
+            }
+
+            if ($totalForArvg >0) {
+                $clubAvrg = $clubDiffTotal / $totalForArvg;
+            }
+
+            $r =  [
+                "club" => $club->name,
+                "arvg" => str_replace(".",",",((string)(round($clubAvrg,3)))),
+                "total" => $club->bought_meter_beers_count
+            ];
+
+            $result->add($r);
+        }
+
+        $result  =$result->sortByDesc('total')->values()->all();
+
+        return view('evaluation')->with([
+            "clubs" => $result,
+            "total_arvg"  => $totalDiff/$totalForTotalArvg,
+        ]);
+    }
 }

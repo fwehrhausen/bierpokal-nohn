@@ -11,11 +11,12 @@
                 <div class="col-2 mb-4" v-for="club in clubs">
                     <div class="card">
                         <!--a href="/theke/$club->id/add-meter" class="stretched-link"></a-->
-                        <h4 class="card-header">{{club.name}} </h4>
+                        <h4 class="card-header">{{club.name}} <a href="/theke/{{club.id}}/return-meter"><i class="fa solid fa-undo"></i> Meter zurückgegeben</a></h4>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
                                     <h5 class="card-title">Meter: {{club.bought_meter_beers_count}}</h5>
+                                    <h6 class="card-title">ausgeliehene Meter: {{club.meters_in_circulation}}</h6>
                                     <p class="card-text"><i class="far fa-clock"></i> letzter
                                         um: {{club.last_bought_meter_beer_at}}</p>
                                 </div>
@@ -26,7 +27,6 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
         <div class="col-2">
